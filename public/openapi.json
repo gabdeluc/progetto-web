@@ -1,0 +1,87 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Circuitry API",
+        "description": "API pubblica per l'accesso ai dati di prodotti e statistiche.",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3000",
+            "description": "Local server"
+        }
+    ],
+    "paths": {
+        "/api/prodotti": {
+            "get": {
+                "summary": "Lista Prodotti",
+                "description": "Recupera la lista di tutti i prodotti disponibili.",
+                "responses": {
+                    "200": {
+                        "description": "Successo",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "ID": {
+                                                "type": "integer"
+                                            },
+                                            "Nome": {
+                                                "type": "string"
+                                            },
+                                            "Prezzo": {
+                                                "type": "number"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/stats": {
+            "get": {
+                "summary": "Statistiche Dashboard",
+                "description": "Recupera le statistiche aggregate per la dashboard (richiede autenticazione).",
+                "security": [
+                    {
+                        "cookieAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successo"
+                    },
+                    "401": {
+                        "description": "Non autorizzato"
+                    }
+                }
+            }
+        },
+        "/api/users": {
+            "get": {
+                "summary": "Lista Utenti",
+                "description": "Recupera la lista degli utenti registrati (pubblico).",
+                "responses": {
+                    "200": {
+                        "description": "Successo"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "cookieAuth": {
+                "type": "apiKey",
+                "in": "cookie",
+                "name": "session"
+            }
+        }
+    }
+}
