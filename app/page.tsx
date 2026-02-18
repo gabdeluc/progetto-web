@@ -141,9 +141,7 @@ export default function HomePage() {
       <footer className="border-t border-border py-8 text-center text-sm text-muted-foreground">
         <div className="flex flex-col items-center gap-4">
           <p>© 2026 Circuitry Inc. All rights reserved.</p>
-          <Link href="/docs" className="text-primary hover:underline">
-            API Docs
-          </Link>
+
         </div>
       </footer>
     </div >

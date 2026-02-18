@@ -6,10 +6,7 @@ export async function GET(
   _request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const session = await getSession();
-  if (!session) {
-    return NextResponse.json({ error: "Non autorizzato" }, { status: 401 });
-  }
+  /* Public route, no session check needed */
 
   const { id } = await params;
   const row = db.prepare("SELECT Foto FROM Prodotto WHERE ID = ?").get(Number(id)) as { Foto: Buffer | null } | undefined;

@@ -8,17 +8,12 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Username e password sono obbligatori." }, { status: 400 });
   }
 
-  const valid = verifyUser(username, password);
-  if (!valid) {
+  const user = verifyUser(username, password);
+  if (!user) {
     return NextResponse.json({ error: "Credenziali non valide." }, { status: 401 });
   }
 
-  const userId = getUserId(username);
-  if (!userId) {
-    return NextResponse.json({ error: "Errore interno." }, { status: 500 });
-  }
-
-  const token = createSession(username, userId);
+  const token = createSession(user.username, user.id);
   await setSessionCookie(token);
 
   return NextResponse.json({ success: true });

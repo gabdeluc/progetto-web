@@ -5,10 +5,9 @@ import { getSession } from "@/lib/auth";
 export const dynamic = "force-dynamic";
 
 export async function GET(request: Request) {
-  const session = await getSession();
-  if (!session) {
-    return NextResponse.json({ error: "Non autorizzato" }, { status: 401 });
-  }
+  // Allow public access
+  // const session = await getSession();
+
 
   const { searchParams } = new URL(request.url);
   const sortBy = searchParams.get("sortBy") || "Nome";
@@ -30,6 +29,7 @@ export async function GET(request: Request) {
       p.Nome, 
       p.Prezzo, 
       p.Featured,
+      p.Categoria_ID,
       p.Categoria_ID,
       c.Nome as Categoria_Nome,
       CASE WHEN p.Foto IS NOT NULL THEN 1 ELSE 0 END as hasFoto

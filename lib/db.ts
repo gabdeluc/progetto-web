@@ -37,6 +37,7 @@ for (const col of profileColumns) {
   }
 }
 
+
 // Create Categories table
 db.exec(`
   CREATE TABLE IF NOT EXISTS Categoria (
@@ -99,71 +100,10 @@ db.exec(`
   )
 `);
 
-// Create Cart table
-db.exec(`
-  CREATE TABLE IF NOT EXISTS Cart (
-    ID INTEGER PRIMARY KEY AUTOINCREMENT,
-    User_ID INTEGER NOT NULL,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (User_ID) REFERENCES users(id) ON DELETE CASCADE
-  )
-`);
-
-// Create Cart_Items table
-db.exec(`
-  CREATE TABLE IF NOT EXISTS Cart_Items (
-    ID INTEGER PRIMARY KEY AUTOINCREMENT,
-    Cart_ID INTEGER NOT NULL,
-    Prodotto_ID INTEGER NOT NULL,
-    Quantita INTEGER NOT NULL DEFAULT 1,
-    added_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (Cart_ID) REFERENCES Cart(ID) ON DELETE CASCADE,
-    FOREIGN KEY (Prodotto_ID) REFERENCES Prodotto(ID) ON DELETE CASCADE,
-    UNIQUE(Cart_ID, Prodotto_ID)
-  )
-`);
-
-// Create Orders table
-db.exec(`
-  CREATE TABLE IF NOT EXISTS Orders (
-    ID INTEGER PRIMARY KEY AUTOINCREMENT,
-    User_ID INTEGER NOT NULL,
-    Totale REAL NOT NULL,
-    Stato TEXT DEFAULT 'pending' CHECK(Stato IN ('pending', 'processing', 'shipped', 'delivered', 'cancelled')),
-    Indirizzo_Spedizione TEXT,
-    Note TEXT,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (User_ID) REFERENCES users(id) ON DELETE CASCADE
-  )
-`);
-
-// Create Order_Items table
-db.exec(`
-  CREATE TABLE IF NOT EXISTS Order_Items (
-    ID INTEGER PRIMARY KEY AUTOINCREMENT,
-    Order_ID INTEGER NOT NULL,
-    Prodotto_ID INTEGER,
-    Nome_Prodotto TEXT NOT NULL,
-    Quantita INTEGER NOT NULL,
-    Prezzo_Unitario REAL NOT NULL,
-    Subtotale REAL NOT NULL,
-    FOREIGN KEY (Order_ID) REFERENCES Orders(ID) ON DELETE CASCADE,
-    FOREIGN KEY (Prodotto_ID) REFERENCES Prodotto(ID) ON DELETE SET NULL
-  )
-`);
-
 // Create indexes for better performance
 db.exec(`
   CREATE INDEX IF NOT EXISTS idx_prodotto_categoria ON Prodotto(Categoria_ID);
   CREATE INDEX IF NOT EXISTS idx_prodotto_featured ON Prodotto(Featured);
-  CREATE INDEX IF NOT EXISTS idx_cart_user ON Cart(User_ID);
-  CREATE INDEX IF NOT EXISTS idx_cart_items_cart ON Cart_Items(Cart_ID);
-  CREATE INDEX IF NOT EXISTS idx_cart_items_prodotto ON Cart_Items(Prodotto_ID);
-  CREATE INDEX IF NOT EXISTS idx_orders_user ON Orders(User_ID);
-  CREATE INDEX IF NOT EXISTS idx_orders_stato ON Orders(Stato);
-  CREATE INDEX IF NOT EXISTS idx_order_items_order ON Order_Items(Order_ID);
   CREATE INDEX IF NOT EXISTS idx_product_images_prodotto ON Product_Images(Prodotto_ID);
 `);
 

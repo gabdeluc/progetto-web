@@ -6,10 +6,9 @@ export async function GET(
   _request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const session = await getSession();
-  if (!session) {
-    return NextResponse.json({ error: "Non autorizzato" }, { status: 401 });
-  }
+  // Allow public access
+  // const session = await getSession();
+
 
   const { id } = await params;
   const product = db.prepare(`
@@ -19,6 +18,7 @@ export async function GET(
       p.Descrizione, 
       p.Prezzo, 
       p.Featured,
+      p.Categoria_ID,
       p.Categoria_ID,
       c.Nome as Categoria_Nome 
     FROM Prodotto p

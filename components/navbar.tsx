@@ -5,6 +5,7 @@ import { useAuth } from "@/hooks/use-auth";
 import { useState } from "react";
 import { useTheme } from "next-themes";
 import { AuthModal } from "./auth-modal";
+
 import {
   LogOut,
   Menu,
@@ -26,6 +27,7 @@ export function Navbar() {
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+
   const { theme, setTheme } = useTheme();
 
   async function handleLogout() {
@@ -72,6 +74,13 @@ export function Navbar() {
               <Clock className="h-4 w-4" />
               Timeline
             </Link>
+            <Link
+              href="/prodotti"
+              className="flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
+            >
+              <Package className="h-4 w-4" />
+              Prodotti
+            </Link>
             {user && (
               <>
                 <Link
@@ -80,13 +89,6 @@ export function Navbar() {
                 >
                   <ShieldCheck className="h-4 w-4" />
                   Area Privata
-                </Link>
-                <Link
-                  href="/privata/prodotti"
-                  className="flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
-                >
-                  <Package className="h-4 w-4" />
-                  Prodotti
                 </Link>
               </>
             )}
@@ -102,6 +104,9 @@ export function Navbar() {
               <Sun className="h-4 w-4 rotate-0 scale-100 transition-transform dark:-rotate-90 dark:scale-0" />
               <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-transform dark:rotate-0 dark:scale-100" />
             </button>
+
+
+
             {user ? (
               <div className="flex items-center gap-3">
                 <Link
@@ -139,6 +144,7 @@ export function Navbar() {
 
           {/* Mobile menu button */}
           <div className="flex items-center gap-2 md:hidden">
+
             <button
               onClick={toggleTheme}
               className="flex h-9 w-9 items-center justify-center rounded-md border border-border bg-transparent text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
@@ -185,6 +191,13 @@ export function Navbar() {
               >
                 <Clock className="h-4 w-4" /> Timeline
               </Link>
+              <Link
+                href="/prodotti"
+                onClick={() => setMobileOpen(false)}
+                className="flex items-center gap-2 text-sm text-foreground"
+              >
+                <Package className="h-4 w-4" /> Prodotti
+              </Link>
               {user && (
                 <>
                   <Link
@@ -193,13 +206,6 @@ export function Navbar() {
                     className="flex items-center gap-2 text-sm text-foreground"
                   >
                     <ShieldCheck className="h-4 w-4" /> Area Privata
-                  </Link>
-                  <Link
-                    href="/privata/prodotti"
-                    onClick={() => setMobileOpen(false)}
-                    className="flex items-center gap-2 text-sm text-foreground"
-                  >
-                    <Package className="h-4 w-4" /> Prodotti
                   </Link>
                   <Link
                     href="/privata/profilo"
@@ -273,6 +279,8 @@ export function Navbar() {
           }}
         />
       )}
+
+
     </>
   );
 }

@@ -138,7 +138,7 @@ export default function PrivataPage() {
           </div>
         </div>
         <Link
-          href="/privata/prodotti"
+          href="/prodotti"
           className="flex items-center justify-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary/90 hover:scale-105"
         >
           <Package className="h-4 w-4" />

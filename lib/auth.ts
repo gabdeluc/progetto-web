@@ -15,17 +15,20 @@ export function createUser(username: string, password: string): { success: boole
       `${salt}:${hashed}`
     );
     return { success: true };
-  } catch {
+  } catch (e) {
     return { success: false, error: "Username già in uso." };
   }
 }
 
-export function verifyUser(username: string, password: string): boolean {
-  const user = db.prepare("SELECT password FROM users WHERE username = ?").get(username) as { password: string } | undefined;
-  if (!user) return false;
+export function verifyUser(username: string, password: string): { id: number; username: string } | null {
+  const user = db.prepare("SELECT id, username, password FROM users WHERE username = ?").get(username) as { id: number; username: string; password: string } | undefined;
+  if (!user) return null;
   const [salt, hash] = user.password.split(":");
   const check = hashPassword(password, salt);
-  return check === hash;
+  if (check === hash) {
+    return { id: user.id, username: user.username };
+  }
+  return null;
 }
 
 export function getUserId(username: string): number | null {
