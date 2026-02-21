@@ -20,19 +20,7 @@ import {
   Crown,
   BarChart3,
 } from "lucide-react";
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-  PieChart,
-  Pie,
-  Cell,
-} from "recharts";
+import { SimpleBarChart, SimplePieChart } from "@/components/ui/simple-charts";
 
 const fetcher = (url: string) => fetch(url).then((r) => r.json());
 
@@ -191,29 +179,11 @@ export default function PrivataPage() {
               <h3 className="font-semibold text-foreground">Distribuzione Categorie</h3>
             </div>
             <div className="h-[300px] w-full">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={stats.categories}>
-                  <CartesianGrid strokeDasharray="3 3" opacity={0.3} vertical={false} />
-                  <XAxis
-                    dataKey="name"
-                    fontSize={12}
-                    tickLine={false}
-                    axisLine={false}
-                    tick={{ fill: 'currentColor', opacity: 0.7 }}
-                  />
-                  <YAxis
-                    fontSize={12}
-                    tickLine={false}
-                    axisLine={false}
-                    tick={{ fill: 'currentColor', opacity: 0.7 }}
-                  />
-                  <Tooltip
-                    contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}
-                    cursor={{ fill: 'transparent' }}
-                  />
-                  <Bar dataKey="value" fill="#3b82f6" radius={[4, 4, 0, 0]} barSize={40} />
-                </BarChart>
-              </ResponsiveContainer>
+              <SimpleBarChart
+                data={stats.categories}
+                xKey="name"
+                barKey="value"
+              />
             </div>
           </div>
 
@@ -226,25 +196,10 @@ export default function PrivataPage() {
               <h3 className="font-semibold text-foreground">Fasce di Prezzo</h3>
             </div>
             <div className="h-[300px] w-full">
-              <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
-                  <Pie
-                    data={stats.priceRanges}
-                    cx="50%"
-                    cy="50%"
-                    innerRadius={60}
-                    outerRadius={100}
-                    paddingAngle={5}
-                    dataKey="value"
-                  >
-                    {stats.priceRanges.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={['#10b981', '#3b82f6', '#f59e0b', '#ef4444'][index % 4]} />
-                    ))}
-                  </Pie>
-                  <Tooltip contentStyle={{ borderRadius: '12px' }} />
-                  <Legend verticalAlign="bottom" height={36} iconType="circle" />
-                </PieChart>
-              </ResponsiveContainer>
+              <SimplePieChart
+                data={stats.priceRanges}
+                dataKey="value"
+              />
             </div>
           </div>
         </div>

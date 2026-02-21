@@ -58,9 +58,6 @@ export default function HomePage() {
               Esplora Utenti
               <ArrowRight className="h-4 w-4" />
             </Link>
-            <Link href="/privata" className="inline-flex items-center gap-2 rounded-xl border border-input bg-background px-8 py-3.5 text-sm font-semibold text-foreground shadow-sm transition-all hover:bg-accent hover:text-accent-foreground">
-              Area Privata
-            </Link>
           </div>
         </motion.div>
 

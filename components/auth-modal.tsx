@@ -6,12 +6,11 @@ import { useState } from "react";
 import { X } from "lucide-react";
 
 interface AuthModalProps {
-  mode: "login" | "register";
   onClose: () => void;
   onSuccess: () => void;
 }
 
-export function AuthModal({ mode, onClose, onSuccess }: AuthModalProps) {
+export function AuthModal({ onClose, onSuccess }: AuthModalProps) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -22,9 +21,8 @@ export function AuthModal({ mode, onClose, onSuccess }: AuthModalProps) {
     setError("");
     setLoading(true);
 
-    const endpoint = mode === "login" ? "/api/auth/login" : "/api/auth/register";
     try {
-      const res = await fetch(endpoint, {
+      const res = await fetch("/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
@@ -50,7 +48,7 @@ export function AuthModal({ mode, onClose, onSuccess }: AuthModalProps) {
         </button>
 
         <h2 className="mb-6 text-xl font-semibold text-card-foreground">
-          {mode === "login" ? "Accedi" : "Registrati"}
+          Accedi
         </h2>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
@@ -92,7 +90,7 @@ export function AuthModal({ mode, onClose, onSuccess }: AuthModalProps) {
             disabled={loading}
             className="mt-2 rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 disabled:opacity-50"
           >
-            {loading ? "Caricamento..." : mode === "login" ? "Accedi" : "Registrati"}
+            {loading ? "Caricamento..." : "Accedi"}
           </button>
         </form>
       </div>

@@ -25,7 +25,7 @@ import {
 export function Navbar() {
   const { user, mutate } = useAuth();
   const [showLogin, setShowLogin] = useState(false);
-  const [showRegister, setShowRegister] = useState(false);
+
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const { theme, setTheme } = useTheme();
@@ -132,12 +132,6 @@ export function Navbar() {
                 >
                   Accedi
                 </button>
-                <button
-                  onClick={() => setShowRegister(true)}
-                  className="rounded-md border border-border bg-transparent px-4 py-1.5 text-sm font-medium text-foreground transition-colors hover:bg-accent"
-                >
-                  Registrati
-                </button>
               </>
             )}
           </div>
@@ -233,26 +227,15 @@ export function Navbar() {
                   </button>
                 </div>
               ) : (
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => {
-                      setShowLogin(true);
-                      setMobileOpen(false);
-                    }}
-                    className="flex-1 rounded-md bg-primary px-3 py-1.5 text-sm font-medium text-primary-foreground"
-                  >
-                    Accedi
-                  </button>
-                  <button
-                    onClick={() => {
-                      setShowRegister(true);
-                      setMobileOpen(false);
-                    }}
-                    className="flex-1 rounded-md border border-border bg-transparent px-3 py-1.5 text-sm font-medium text-foreground"
-                  >
-                    Registrati
-                  </button>
-                </div>
+                <button
+                  onClick={() => {
+                    setShowLogin(true);
+                    setMobileOpen(false);
+                  }}
+                  className="w-full rounded-md bg-primary px-3 py-1.5 text-sm font-medium text-primary-foreground"
+                >
+                  Accedi
+                </button>
               )}
             </div>
           </div>
@@ -261,7 +244,6 @@ export function Navbar() {
 
       {showLogin && (
         <AuthModal
-          mode="login"
           onClose={() => setShowLogin(false)}
           onSuccess={() => {
             setShowLogin(false);
@@ -269,16 +251,7 @@ export function Navbar() {
           }}
         />
       )}
-      {showRegister && (
-        <AuthModal
-          mode="register"
-          onClose={() => setShowRegister(false)}
-          onSuccess={() => {
-            setShowRegister(false);
-            mutate();
-          }}
-        />
-      )}
+
 
 
     </>
